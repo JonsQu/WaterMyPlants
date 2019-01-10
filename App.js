@@ -7,9 +7,9 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Modal, Button,Platform, StyleSheet, Text, View} from 'react-native';
 import Plants from './Plants';
-import AddPlant from './AddPlant';
+import AddPlantForm from './AddPlantForm';
 
 
 const instructions = Platform.select({
@@ -21,11 +21,33 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props){
+    super(props);
+    this.state = {modalVisible: false};
+  }
+  
   render() {
     return (
       <View style={styles.container}>
         <Plants/>
-        <AddPlant/>
+        <View >
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+          }}>
+          <View>
+              <AddPlantForm/>
+          <Button style={styles.button} title='Close' onPress={() => {
+                  this.setState({modalVisible: false});
+                }}>Close</Button>
+            </View>
+          </Modal>
+            <Button style={styles.button} title='Add' onPress={() => {
+                  this.setState({modalVisible: true});
+                }}>Add Plant</Button>
+        </View>
       </View>
     );
   }
@@ -36,15 +58,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+},
+button: {
+    backgroundColor: 'green',
+    borderRadius: 25,
+    fontSize: 30
+},
 });

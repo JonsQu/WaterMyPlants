@@ -8,7 +8,7 @@ export default class Plants extends Component {
     this.state ={ isLoading: true}
   }
 
-  componentDidMount(){
+  componentWillMount(){
     return fetch('https://watermyplantsbackend.herokuapp.com/plants/all', {
         method: 'POST', 
         body: JSON.stringify({}), // data can be `string` or {object}!

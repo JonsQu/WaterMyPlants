@@ -17,39 +17,28 @@ export default class AddPlantForm extends Component {
   }
   savePlant = () => {
     this.setState({isLoading: true});
-    return fetch('https://watermyplantsbackend.herokuapp.com/plants/search', {
-                method: 'POST', 
-                body: JSON.stringify({
-                    search: this.state.plantName
-                }), // data can be `string` or {object}!
-                headers:{
-                'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
-            .then(response => {
-                if(this.state.plantName !== response[0].plantName){
-                    return fetch('https://watermyplantsbackend.herokuapp.com/plants/search', {
-                        method: 'POST', 
-                        body: JSON.stringify({
-                            search: this.state.plantName,
-                            plantDescription: this.state.plantDescription
-                        }), // data can be `string` or {object}!
-                        headers:{
-                        'Content-Type': 'application/json'
-                        }
-                    }).then(res  => {
-                        
-                        this.setState({
-                            isLoading: false,
-                        });
-                    })
-                    .catch(error => console.error('Error:', error));
-                }
-                this.setState({
-                    isLoading: false,
-                });
-            })
-            .catch(error => console.error('Error:', error));
+    
+    return fetch('https://watermyplantsbackend.herokuapp.com/plants/create', {
+        method: 'POST', 
+        body: JSON.stringify({
+            plantName: this.state.plantName,
+            plantDescription: this.state.plantDescription
+        }), // data can be `string` or {object}!
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+      .then(response => {
+          console.log(response);
+        this.setState({
+            isLoading: false,
+            dataSource: response,
+          }, function(){
+              
+          });
+      })
+      .catch(error => console.error('Error:', error));
+                
   }
   
 
